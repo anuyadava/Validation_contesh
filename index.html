@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        h2{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Form Validation</h2>
+        <label for="email">Email</label><br>
+        <input type="text" id="email" name="email" onchange="validateForm()"><br>
+        <span id="errorEmail" class="error"></span><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password" onchange="validateForm()"><br>
+        <span id="errorPassword" class="error"></span><br>
+        <span id="success" class="success"></span><br>
+        <button onclick="submitForm()">Submit</button>
+    </div>
+    
+    <script>
+        function validateForm() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorEmail = document.getElementById('errorEmail');
+            const errorPassword = document.getElementById('errorPassword');
+            const success = document.getElementById('success');
+            
+            let emailValid = email.length > 3 && email.includes('@') && email.includes('.');
+            let passwordValid = password.length > 8;
+            
+            if (emailValid) {
+                errorEmail.textContent = '';
+            } else {
+                errorEmail.textContent = 'Make sure email is more than 3 characters and has @ and a .';
+            }
+            
+            if (passwordValid) {
+                errorPassword.textContent = '';
+            } else {
+                errorPassword.textContent = 'Make sure password is more than 8 characters.';
+            }
+            
+            if (emailValid && passwordValid) {
+                success.textContent = 'All good to go!';
+            } else {
+                success.textContent = '';
+            }
+        }
+
+        function submitForm() {
+            if (document.getElementById('success').textContent === 'All good to go!') {
+                if (confirm("Are you sure you want to submit the form?")) {
+                    alert("Successful signup!");
+                } else {
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('errorEmail').textContent = '';
+                    document.getElementById('errorPassword').textContent = '';
+                    document.getElementById('success').textContent = '';
+                }
+            } else {
+                alert("Please make sure all fields are valid before submitting.");
+            }
+        }
+    </script>
+</body>
+</html>
